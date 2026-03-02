@@ -1,1 +1,59 @@
+body {
+    font-family: Serif, sans-serif; 
+    background-color: #e23030; 
+    
+    margin: 0;
+    padding: 0;
+}
+.anh-chan-dung {
+    width: 300px;
+    height: auto; 
+}
+.anh-chan-dung {
+    width: 300px;
+    height: 400px; 
+    display: inline-block; 
+    margin: 10px;
+    border: 5px solid white;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    object-fit: cover; 
+}
+.anh-duong-pho{
+     width: 500px;
+    height: auto; 
+}
 
+.thu-vien-anh {
+    text-align: left;
+    padding: 20px;
+}
+
+.anh-duong-pho {
+    width: 400px;
+    height: 300px; 
+    display: inline-block; 
+    margin: 10px;
+    border: 5px solid white;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    object-fit: cover; 
+}
+.anh-mon-hoc {
+    width: 300px;
+    height: auto; 
+}
+.anh-mon-hoc {
+    width: 400px;
+    height: 200px; 
+    display: inline-block; 
+    margin: 10px;
+    border: 5px solid rgb(0, 0, 0);
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    object-fit: cover; 
+}
+h1, h2 {
+    padding-left: 30px; 
+}
+#gioi-thieu {
+    padding-top: 30px; 
+    padding-bottom: 20px;
+}
