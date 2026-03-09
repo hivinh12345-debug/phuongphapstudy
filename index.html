@@ -1,9 +1,198 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
+
 <head>
-<title>L.I.P.S — Lock In Peak Study</title>
-<link rel="stylesheet" href="CSS/style.CSS">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>L.I.P.S — Lock In Peak Study</title>
+
+  <!-- Tải font chữ từ Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Liên kết tới file CSS riêng -->
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body style="background-color: antiquewhite;"> 
+
+<body>
+
+  <!-- ==========================================
+       HEADER — Thanh điều hướng trên cùng
+  =========================================== -->
+  <header class="header">
+    <div>
+      <div class="logo">L.I.P.S 📚</div>
+      <div class="logo-sub">Lock In Peak Study</div>
+    </div>
+    <button class="btn-theme" onclick="toggleTheme()" id="nutTheme">🌙 Chế độ tối</button>
+  </header>
+
+
+  <!-- ==========================================
+       HERO — Phần giới thiệu lớn đầu trang
+  =========================================== -->
+  <div class="hero">
+    <h1>Lock In Peak Study ✨</h1>
+    <p>Tìm phương pháp học phù hợp với bạn. Học đúng cách — hiểu sâu hơn, nhớ lâu hơn.</p>
+  </div>
+
+
+  <!-- ==========================================
+       QUOTE — Câu trích dẫn ngẫu nhiên
+       JavaScript sẽ tự điền nội dung vào đây
+  =========================================== -->
+  <div class="quote-box">
+    <p id="quoteText">Đang tải...</p>
+    <span id="quoteAuthor"></span>
+  </div>
+
+
+  <!-- ==========================================
+       MAIN — Nội dung chính của trang
+  =========================================== -->
+  <main class="main">
+
+    <!-- GỢI Ý CÁ NHÂN -->
+    <div class="tieu-de-section">🎯 Gợi ý phương pháp cho bạn</div>
+    <div class="the">
+      <div class="quiz-luoi">
+
+        <!-- Chọn độ tuổi -->
+        <div>
+          <label>Độ tuổi</label>
+          <select class="o-chon" id="chonTuoi">
+            <option value="">— Chọn —</option>
+            <option value="cap2">Dưới 15 tuổi</option>
+            <option value="cap3">15 – 18 tuổi</option>
+            <option value="dh">18 – 25 tuổi</option>
+            <option value="nguoilon">Trên 25 tuổi</option>
+          </select>
+        </div>
+
+        <!-- Chọn tính cách — dùng data-val để JS đọc giá trị -->
+        <div class="nhom-tinh-cach">
+          <label>Tính cách <small style="color:var(--mau-xanh-la);font-weight:600">(chọn được nhiều)</small></label>
+          <div class="tinh-cach-luoi">
+            <button class="nut-tinh-cach" data-val="hinh-anh"    onclick="chonTinhCach(this)">🖼️ Thích hình ảnh</button>
+            <button class="nut-tinh-cach" data-val="nhom"        onclick="chonTinhCach(this)">👥 Thích học nhóm</button>
+            <button class="nut-tinh-cach" data-val="mot-minh"    onclick="chonTinhCach(this)">🧘 Học một mình</button>
+            <button class="nut-tinh-cach" data-val="thuc-hanh"   onclick="chonTinhCach(this)">🛠️ Thích thực hành</button>
+            <button class="nut-tinh-cach" data-val="nghe"        onclick="chonTinhCach(this)">🎧 Thích nghe / đọc to</button>
+            <button class="nut-tinh-cach" data-val="sang-tao"    onclick="chonTinhCach(this)">🎨 Sáng tạo</button>
+            <button class="nut-tinh-cach" data-val="co-cau-truc" onclick="chonTinhCach(this)">📋 Thích có kế hoạch</button>
+            <button class="nut-tinh-cach" data-val="to-mo"       onclick="chonTinhCach(this)">🔍 Hay đặt câu hỏi</button>
+          </div>
+        </div>
+
+        <!-- Chọn năng lực -->
+        <div>
+          <label>Năng lực hiện tại</label>
+          <select class="o-chon" id="chonNangLuc">
+            <option value="">— Chọn —</option>
+            <option value="moi">Mới bắt đầu</option>
+            <option value="trungbinh">Trung bình</option>
+            <option value="kha">Khá / Giỏi</option>
+          </select>
+        </div>
+
+        <!-- Chọn thời gian -->
+        <div>
+          <label>Thời gian học mỗi ngày</label>
+          <select class="o-chon" id="chonThoiGian">
+            <option value="">— Chọn —</option>
+            <option value="it">Dưới 30 phút</option>
+            <option value="vua">30 – 60 phút</option>
+            <option value="nhieu">1 – 2 giờ</option>
+            <option value="rat-nhieu">Trên 2 giờ</option>
+          </select>
+        </div>
+
+      </div>
+
+      <button class="btn-goi-y" onclick="layGoiY()">✨ Gợi ý cho tôi</button>
+
+      <!-- Kết quả gợi ý: ẩn mặc định, JS thêm class "hien" để hiện -->
+      <div class="ket-qua-goi-y" id="ketQuaGoiY"></div>
+    </div>
+
+
+    <!-- PHƯƠNG PHÁP ĐÃ CHỌN — ẩn khi chưa chọn gì, JS điều khiển -->
+    <div class="da-chon-box the" id="boxDaChon">
+      <strong>✅ Phương pháp bạn đã chọn:</strong>
+      <div class="danh-sach-chon" id="danhSachChon"></div>
+    </div>
+
+
+    <!-- THƯ VIỆN PHƯƠNG PHÁP — JS tự tạo các thẻ vào đây -->
+    <div class="tieu-de-section">📚 Thư viện phương pháp học</div>
+    <p style="color:var(--mau-chu-mo); margin-bottom:16px; font-size:14px">
+      Click vào thẻ để xem chi tiết. Click lần nữa để chọn / bỏ chọn.
+    </p>
+    <div class="luoi-phuong-phap" id="luoiPhuongPhap"></div>
+
+
+    <!-- CÔNG CỤ HỖ TRỢ -->
+    <div class="tieu-de-section">🛠️ Công cụ hỗ trợ học tập</div>
+    <div class="luoi-cong-cu">
+
+      <!-- POMODORO TIMER -->
+      <div class="the">
+        <div class="tieu-de-the">🍅 Pomodoro Timer</div>
+
+        <!-- 3 chế độ: 25/5, 50/10, 90/20 -->
+        <div class="chon-che-do">
+          <button class="btn-che-do hoat-dong" onclick="doiCheDoPomodoro(25, 5, this)">25 / 5</button>
+          <button class="btn-che-do"           onclick="doiCheDoPomodoro(50, 10, this)">50 / 10</button>
+          <button class="btn-che-do"           onclick="doiCheDoPomodoro(90, 20, this)">90 / 20</button>
+        </div>
+
+        <div class="trang-thai-pomo" id="trangThaiPomo">Tập trung 🔥</div>
+        <div class="dong-ho" id="dongHo">25:00</div>
+
+        <div class="thanh-tien-trinh">
+          <div class="thanh-bar" id="thanhBar"></div>
+        </div>
+
+        <div class="nhom-nut-pomo">
+          <button class="btn-pomo" onclick="batDung()" id="nutBatDung">▶ Bắt đầu</button>
+          <button class="btn-pomo" onclick="datLai()">↺ Đặt lại</button>
+          <button class="btn-pomo" onclick="boQua()">⏭ Bỏ qua</button>
+        </div>
+      </div>
+
+      <!-- TO-DO LIST -->
+      <div class="the">
+        <div class="tieu-de-the">✅ Danh sách việc cần làm</div>
+
+        <div class="nhap-todo">
+          <!-- Nhấn Enter hoặc nút "+" để thêm việc -->
+          <input
+            type="text"
+            class="o-nhap"
+            id="oNhapTodo"
+            placeholder="Thêm việc cần làm..."
+            onkeydown="if(event.key === 'Enter') themViec()"
+          />
+          <button class="btn-them" onclick="themViec()">+</button>
+        </div>
+
+        <!-- Danh sách task — JS sẽ cập nhật -->
+        <div class="danh-sach-todo" id="danhSachTodo">
+          <div class="trong-rong">Chưa có việc gì cả 📝</div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+
+  <!-- ==========================================
+       FOOTER — Phần cuối trang
+  =========================================== -->
+  <footer>L.I.P.S — Lock In Peak Study &nbsp;·&nbsp; Học đúng cách, sống trọn vẹn 🌱</footer>
+
+
+  <!-- Liên kết tới file JavaScript riêng — đặt cuối body để HTML load trước -->
+  <script src="script.js"></script>
+
 </body>
 </html>
