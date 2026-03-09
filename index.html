@@ -1,9 +1,741 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi" data-theme="dark">
 <head>
-<title>L.I.P.S</title>
-<link rel="stylesheet" href="CSS/style.CSS">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L.I.P.S — Lock In Peak Study</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0f;
+  --bg2: #111118;
+  --bg3: #1a1a24;
+  --card: #16161f;
+  --border: rgba(255,255,255,0.07);
+  --accent: #7c6af7;
+  --accent2: #f7c06a;
+  --accent3: #6af7c0;
+  --text: #e8e8f0;
+  --text2: #8888aa;
+  --text3: #555570;
+  --glow: rgba(124,106,247,0.25);
+}
+[data-theme="light"] {
+  --bg: #f4f3ff;
+  --bg2: #ededf8;
+  --bg3: #e4e3f4;
+  --card: #ffffff;
+  --border: rgba(0,0,0,0.08);
+  --accent: #5b4de0;
+  --accent2: #d4a017;
+  --accent3: #1abf8a;
+  --text: #1a1a2e;
+  --text2: #555575;
+  --text3: #9999bb;
+  --glow: rgba(91,77,224,0.15);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  transition:background .3s,color .3s;
+}
+
+/* HEADER */
+.header{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 32px;
+  background:rgba(10,10,15,0.8);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  transition:background .3s;
+}
+[data-theme="light"] .header{background:rgba(244,243,255,0.85)}
+.logo{
+  font-family:'Syne',sans-serif;
+  font-size:22px;font-weight:800;
+  letter-spacing:-0.5px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.logo span{font-size:11px;display:block;font-weight:400;color:var(--text2);-webkit-text-fill-color:var(--text2);letter-spacing:2px;margin-top:-2px}
+.nav-tools{display:flex;align-items:center;gap:8px}
+.btn-icon{
+  width:38px;height:38px;border-radius:10px;
+  border:1px solid var(--border);
+  background:var(--card);
+  color:var(--text2);
+  cursor:pointer;font-size:16px;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .2s;
+}
+.btn-icon:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* HERO */
+.hero{
+  padding:130px 32px 60px;
+  text-align:center;
+  position:relative;overflow:hidden;
+}
+.hero-glow{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:600px;height:300px;
+  background:radial-gradient(ellipse,var(--glow) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero h1{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(42px,8vw,88px);
+  font-weight:800;
+  line-height:.95;
+  letter-spacing:-3px;
+  background:linear-gradient(135deg,var(--text) 0%,var(--accent) 50%,var(--accent2) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.hero-sub{
+  margin-top:16px;
+  font-size:16px;color:var(--text2);
+  max-width:480px;margin-inline:auto;line-height:1.6;
+}
+
+/* QUOTE */
+.quote-section{
+  margin:24px 32px;
+  padding:24px 32px;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:16px;
+  border-left:3px solid var(--accent);
+  position:relative;
+  transition:background .3s;
+}
+.quote-mark{font-size:48px;color:var(--accent);line-height:1;font-family:Georgia,serif;opacity:.4;position:absolute;top:12px;left:20px}
+.quote-text{
+  font-size:17px;line-height:1.6;
+  font-style:italic;color:var(--text);
+  padding-left:28px;
+}
+.quote-author{margin-top:8px;font-size:13px;color:var(--accent2);font-weight:500;padding-left:28px}
+
+/* MAIN GRID */
+.main{padding:0 32px 80px;max-width:1400px;margin:0 auto}
+.section-label{
+  font-family:'Syne',sans-serif;
+  font-size:11px;letter-spacing:3px;text-transform:uppercase;
+  color:var(--accent);margin-bottom:16px;
+}
+.section-title{
+  font-family:'Syne',sans-serif;
+  font-size:28px;font-weight:700;
+  margin-bottom:24px;
+}
+
+/* PROFILE QUIZ */
+.quiz-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:20px;padding:28px;
+  margin-bottom:32px;
+  transition:background .3s;
+}
+.quiz-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:20px}
+.quiz-group-wide{grid-column:1/-1}
+.personality-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:2px}
+.p-chip{
+  padding:7px 14px;border-radius:20px;
+  border:1px solid var(--border);
+  background:var(--bg2);color:var(--text2);
+  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;
+  cursor:pointer;transition:all .2s;white-space:nowrap;
+}
+.p-chip:hover{border-color:var(--accent);color:var(--text)}
+.p-chip.active{background:rgba(124,106,247,.18);border-color:var(--accent);color:var(--accent)}
+.quiz-group label{font-size:12px;color:var(--text2);letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:6px}
+.quiz-select{
+  width:100%;padding:10px 14px;
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:10px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;
+  cursor:pointer;outline:none;appearance:none;
+  transition:border-color .2s;
+}
+.quiz-select:focus{border-color:var(--accent)}
+.btn-suggest{
+  padding:12px 28px;
+  background:linear-gradient(135deg,var(--accent),#a78bfa);
+  color:#fff;border:none;border-radius:12px;
+  font-family:'Syne',sans-serif;font-size:14px;font-weight:600;
+  cursor:pointer;letter-spacing:.5px;
+  transition:transform .2s,box-shadow .2s;
+}
+.btn-suggest:hover{transform:translateY(-2px);box-shadow:0 8px 24px var(--glow)}
+.suggestion-result{
+  display:none;margin-top:20px;padding:16px 20px;
+  background:var(--bg2);border-radius:12px;
+  border-left:3px solid var(--accent3);
+  font-size:14px;line-height:1.7;color:var(--text);
+}
+.suggestion-result.show{display:block}
+
+/* METHODS GRID */
+.methods-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;margin-bottom:40px}
+.method-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:16px;padding:24px;
+  cursor:pointer;
+  transition:all .25s;
+  position:relative;overflow:hidden;
+}
+.method-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .3s;
+}
+.method-card:hover{transform:translateY(-4px);border-color:var(--accent);box-shadow:0 12px 32px rgba(124,106,247,.15)}
+.method-card:hover::before{transform:scaleX(1)}
+.method-card.selected{border-color:var(--accent);background:rgba(124,106,247,.08)}
+.method-card.selected::before{transform:scaleX(1)}
+.method-tag{
+  display:inline-block;padding:3px 10px;border-radius:20px;
+  font-size:11px;font-weight:500;letter-spacing:.5px;text-transform:uppercase;
+  margin-bottom:12px;
+}
+.tag-memory{background:rgba(124,106,247,.15);color:var(--accent)}
+.tag-focus{background:rgba(247,192,106,.15);color:var(--accent2)}
+.tag-active{background:rgba(106,247,192,.15);color:var(--accent3)}
+.tag-social{background:rgba(247,106,106,.15);color:#f76a6a}
+.method-icon{font-size:28px;margin-bottom:12px}
+.method-name{
+  font-family:'Syne',sans-serif;font-size:17px;font-weight:700;
+  margin-bottom:8px;
+}
+.method-brief{font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:12px}
+.method-detail{
+  display:none;font-size:13px;color:var(--text);
+  line-height:1.7;border-top:1px solid var(--border);padding-top:12px;margin-top:4px;
+}
+.method-card.expanded .method-detail{display:block}
+.method-best{font-size:12px;color:var(--accent3);margin-top:8px}
+
+/* BOTTOM TOOLS */
+.tools-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:32px}
+@media(max-width:600px){.tools-row{grid-template-columns:1fr}}
+
+/* POMODORO */
+.tool-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:20px;padding:24px;
+  transition:background .3s;
+}
+.tool-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;letter-spacing:.5px;margin-bottom:20px;display:flex;align-items:center;gap:8px}
+.pomo-display{
+  text-align:center;
+  font-family:'Syne',sans-serif;font-size:52px;font-weight:800;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  margin:8px 0 16px;
+  letter-spacing:-2px;
+}
+.pomo-label{text-align:center;font-size:12px;color:var(--text2);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px}
+.pomo-progress{
+  height:4px;background:var(--bg2);border-radius:4px;margin-bottom:20px;overflow:hidden;
+}
+.pomo-bar{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:4px;width:100%;transition:width .5s}
+.pomo-btns{display:flex;gap:8px;justify-content:center}
+.pomo-btn{
+  padding:8px 18px;border-radius:10px;border:1px solid var(--border);
+  background:var(--bg2);color:var(--text);
+  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;
+  transition:all .2s;
+}
+.pomo-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+.pomo-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.pomo-modes{display:flex;gap:6px;margin-bottom:16px;justify-content:center}
+.pomo-mode{
+  padding:5px 12px;border-radius:8px;border:1px solid var(--border);
+  background:transparent;color:var(--text2);font-size:12px;cursor:pointer;
+  transition:all .2s;
+}
+.pomo-mode.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* MUSIC */
+.volume-row{display:flex;align-items:center;gap:10px}
+.volume-row label{font-size:12px;color:var(--text2)}
+input[type=range]{flex:1;accent-color:var(--accent)}
+
+/* TODO */
+.todo-input-row{display:flex;gap:8px;margin-bottom:12px}
+.todo-input{
+  flex:1;padding:10px 14px;
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:10px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;
+  outline:none;transition:border-color .2s;
+}
+.todo-input:focus{border-color:var(--accent)}
+.todo-add{
+  padding:10px 16px;border-radius:10px;
+  background:var(--accent);color:#fff;border:none;
+  font-size:18px;cursor:pointer;transition:opacity .2s;
+}
+.todo-add:hover{opacity:.85}
+.todo-list{display:flex;flex-direction:column;gap:6px;max-height:220px;overflow-y:auto}
+.todo-item{
+  display:flex;align-items:center;gap:10px;padding:10px 12px;
+  background:var(--bg2);border-radius:10px;border:1px solid var(--border);
+  transition:all .2s;
+}
+.todo-item.done{opacity:.5}
+.todo-item.done .todo-text{text-decoration:line-through;color:var(--text3)}
+.todo-check{
+  width:18px;height:18px;border-radius:5px;
+  border:2px solid var(--border);background:transparent;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;transition:all .2s;font-size:11px;color:#fff;
+}
+.todo-item.done .todo-check{background:var(--accent3);border-color:var(--accent3)}
+.todo-text{font-size:13px;flex:1}
+.todo-del{
+  background:none;border:none;color:var(--text3);cursor:pointer;font-size:16px;padding:2px 4px;
+  transition:color .2s;
+}
+.todo-del:hover{color:#f76a6a}
+.todo-empty{text-align:center;padding:20px;color:var(--text3);font-size:13px}
+
+/* SELECTED METHODS SUMMARY */
+.selected-summary{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:20px;padding:24px;margin-bottom:32px;
+  display:none;
+  transition:background .3s;
+}
+.selected-summary.show{display:block}
+.selected-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.chip{
+  padding:6px 14px;border-radius:20px;
+  background:rgba(124,106,247,.15);
+  color:var(--accent);font-size:13px;font-weight:500;
+  display:flex;align-items:center;gap:6px;
+}
+.chip-del{background:none;border:none;color:inherit;cursor:pointer;font-size:14px;opacity:.7}
+.chip-del:hover{opacity:1}
+
+footer{text-align:center;padding:24px;color:var(--text3);font-size:12px;letter-spacing:1px}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+
+@media(max-width:600px){
+  .header{padding:12px 16px}
+  .hero{padding:110px 16px 40px}
+  .main,.quote-section{padding-inline:16px}
+  .hero h1{letter-spacing:-2px}
+}
+</style>
 </head>
-<body> 
+<body>
+<!-- HEADER -->
+<header class="header">
+  <div class="logo">L.I.P.S<span>Lock In Peak Study</span></div>
+  <div class="nav-tools">
+    <button class="btn-icon" onclick="toggleTheme()" title="Đổi giao diện" id="themeBtn">🌙</button>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-glow"></div>
+  <h1>LOCK IN<br>PEAK STUDY</h1>
+  <p class="hero-sub">Khám phá phương pháp học khoa học phù hợp với bạn. Học ít hơn, hiểu sâu hơn, nhớ lâu hơn.</p>
+</div>
+
+<!-- QUOTE -->
+<div class="quote-section" id="quoteSection">
+  <div class="quote-mark">"</div>
+  <div class="quote-text" id="quoteText"></div>
+  <div class="quote-author" id="quoteAuthor"></div>
+</div>
+
+<main class="main">
+
+  <!-- PROFILE QUIZ -->
+  <div class="section-label">🎯 Gợi ý cá nhân</div>
+  <div class="section-title">Tìm phương pháp phù hợp với bạn</div>
+  <div class="quiz-card">
+    <div class="quiz-grid">
+      <div class="quiz-group">
+        <label>Độ tuổi</label>
+        <select class="quiz-select" id="qAge">
+          <option value="">Chọn độ tuổi</option>
+          <option value="kid">Dưới 12 tuổi</option>
+          <option value="teen">12 – 18 tuổi</option>
+          <option value="young">18 – 25 tuổi</option>
+          <option value="adult">25 – 40 tuổi</option>
+          <option value="senior">Trên 40 tuổi</option>
+        </select>
+      </div>
+      <div class="quiz-group quiz-group-wide">
+        <label>Tính cách <span style="color:var(--accent3);font-size:10px;letter-spacing:0;text-transform:none;font-style:italic">Chọn nhiều</span></label>
+        <div class="personality-chips">
+          <button class="p-chip" data-val="visual" onclick="togglePersonality(this)">🖼️ Thích hình ảnh</button>
+          <button class="p-chip" data-val="social" onclick="togglePersonality(this)">👥 Thích học nhóm</button>
+          <button class="p-chip" data-val="solo" onclick="togglePersonality(this)">🧘 Học một mình</button>
+          <button class="p-chip" data-val="active" onclick="togglePersonality(this)">🛠️ Thích thực hành</button>
+          <button class="p-chip" data-val="auditory" onclick="togglePersonality(this)">🎧 Thích nghe/đọc to</button>
+          <button class="p-chip" data-val="creative" onclick="togglePersonality(this)">🎨 Sáng tạo</button>
+          <button class="p-chip" data-val="structured" onclick="togglePersonality(this)">📋 Thích có cấu trúc</button>
+          <button class="p-chip" data-val="curious" onclick="togglePersonality(this)">🔍 Tò mò, hay đặt câu hỏi</button>
+        </div>
+      </div>
+      <div class="quiz-group">
+        <label>Năng lực hiện tại</label>
+        <select class="quiz-select" id="qLevel">
+          <option value="">Chọn mức độ</option>
+          <option value="beginner">Mới bắt đầu</option>
+          <option value="intermediate">Trung bình</option>
+          <option value="advanced">Nâng cao</option>
+        </select>
+      </div>
+      <div class="quiz-group">
+        <label>Thời gian mỗi ngày</label>
+        <select class="quiz-select" id="qTime">
+          <option value="">Chọn thời gian</option>
+          <option value="short">Dưới 30 phút</option>
+          <option value="medium">30 – 60 phút</option>
+          <option value="long">1 – 2 giờ</option>
+          <option value="vlong">Trên 2 giờ</option>
+        </select>
+      </div>
+    </div>
+    <button class="btn-suggest" onclick="getSuggestion()">✨ Gợi ý phương pháp cho tôi</button>
+    <div class="suggestion-result" id="suggestionResult"></div>
+  </div>
+
+  <!-- SELECTED SUMMARY -->
+  <div class="selected-summary" id="selectedSummary">
+    <div class="section-label">✅ Phương pháp bạn đã chọn</div>
+    <div class="selected-chips" id="selectedChips"></div>
+  </div>
+
+  <!-- METHODS LIBRARY -->
+  <div class="section-label">📚 Thư viện phương pháp</div>
+  <div class="section-title">Các phương pháp học được nghiên cứu</div>
+  <div class="methods-grid" id="methodsGrid"></div>
+
+  <!-- TOOLS ROW -->
+  <div class="section-label">🛠 Công cụ học tập</div>
+  <div class="section-title">Hỗ trợ tập trung</div>
+  <div class="tools-row">
+
+    <!-- POMODORO -->
+    <div class="tool-card">
+      <div class="tool-title">🍅 Pomodoro Timer</div>
+      <div class="pomo-modes">
+        <button class="pomo-mode active" onclick="setPomoMode(25,5,this)">25/5</button>
+        <button class="pomo-mode" onclick="setPomoMode(50,10,this)">50/10</button>
+        <button class="pomo-mode" onclick="setPomoMode(90,20,this)">90/20</button>
+      </div>
+      <div class="pomo-label" id="pomoLabel">FOCUS</div>
+      <div class="pomo-display" id="pomoDisplay">25:00</div>
+      <div class="pomo-progress"><div class="pomo-bar" id="pomoBar"></div></div>
+      <div class="pomo-btns">
+        <button class="pomo-btn" onclick="pomoPause()" id="pomoPauseBtn">▶ Start</button>
+        <button class="pomo-btn" onclick="pomoReset()">↺ Reset</button>
+        <button class="pomo-btn" onclick="pomoSkip()">⏭ Skip</button>
+      </div>
+    </div>
+
+
+
+    <!-- TODO -->
+    <div class="tool-card">
+      <div class="tool-title">✅ To-do List</div>
+      <div class="todo-input-row">
+        <input type="text" class="todo-input" id="todoInput" placeholder="Thêm nhiệm vụ..." onkeydown="if(event.key==='Enter')addTodo()">
+        <button class="todo-add" onclick="addTodo()">+</button>
+      </div>
+      <div class="todo-list" id="todoList">
+        <div class="todo-empty">Chưa có nhiệm vụ nào 📝</div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer>L.I.P.S — Lock In Peak Study &nbsp;·&nbsp; Học đúng cách, sống trọn vẹn</footer>
+
+
+
+<script>
+// ===== THEME =====
+function toggleTheme(){
+  const h=document.documentElement;
+  const isDark=h.getAttribute('data-theme')==='dark';
+  h.setAttribute('data-theme',isDark?'light':'dark');
+  document.getElementById('themeBtn').textContent=isDark?'🌙':'☀️';
+}
+
+// ===== QUOTES =====
+const quotes=[
+  {text:"Học không phải là nhồi nhét thông tin mà là thắp sáng ngọn lửa.",author:"William Butler Yeats"},
+  {text:"Bộ não không seperti cốc cần được đổ đầy, mà là ngọn lửa cần được châm.",author:"Plutarch"},
+  {text:"Đầu tư vào kiến thức luôn cho lãi suất cao nhất.",author:"Benjamin Franklin"},
+  {text:"Nếu bạn không thể giải thích đơn giản, bạn chưa hiểu đủ sâu.",author:"Albert Einstein"},
+  {text:"Học từ ngày hôm qua, sống cho hôm nay, hi vọng cho ngày mai.",author:"Albert Einstein"},
+  {text:"Thành công không phải là chìa khóa của hạnh phúc. Hạnh phúc là chìa khóa của thành công.",author:"Albert Schweitzer"},
+  {text:"Kiên trì là bí mật của mọi chiến thắng.",author:"Victor Hugo"},
+  {text:"Mỗi chuyên gia từng là người mới bắt đầu.",author:"Helen Hayes"},
+  {text:"Hãy học như bạn sẽ sống mãi mãi.",author:"Mahatma Gandhi"},
+  {text:"Kỷ luật là cầu nối giữa mục tiêu và thành tựu.",author:"Jim Rohn"},
+];
+(function(){
+  const q=quotes[Math.floor(Math.random()*quotes.length)];
+  document.getElementById('quoteText').textContent=q.text;
+  document.getElementById('quoteAuthor').textContent='— '+q.author;
+})();
+
+// ===== METHODS =====
+const methods=[
+  {id:'pomodoro',icon:'🍅',name:'Kỹ thuật Pomodoro',tag:'focus',tagLabel:'Tập trung',
+   brief:'Học 25 phút, nghỉ 5 phút. Chia nhỏ thời gian giúp não không bị kiệt sức.',
+   detail:'Được phát triển bởi Francesco Cirillo vào cuối 1980s. Dựa trên nghiên cứu về cognitive fatigue – não người chỉ duy trì tập trung sâu tối đa 25-50 phút. Sau mỗi 4 pomodoro, nghỉ dài 15-30 phút. Phù hợp để học các môn đòi hỏi tập trung cao như toán, lập trình.',
+   best:'Phù hợp: Người dễ mất tập trung, procrastination'},
+  {id:'feynman',icon:'🧠',name:'Kỹ thuật Feynman',tag:'memory',tagLabel:'Ghi nhớ',
+   brief:'Học bằng cách dạy lại. Giải thích khái niệm như cho đứa trẻ 10 tuổi nghe.',
+   detail:'Được đặt theo tên nhà vật lý Richard Feynman. Bước 1: Chọn chủ đề cần học. Bước 2: Giải thích như dạy cho người mới. Bước 3: Xác định lỗ hổng kiến thức. Bước 4: Quay lại nghiên cứu. Đây là cách hiểu sâu nhất, không chỉ nhớ mặt ngoài.',
+   best:'Phù hợp: Học các khái niệm trừu tượng, chuẩn bị thi'},
+  {id:'spaced',icon:'📅',name:'Spaced Repetition',tag:'memory',tagLabel:'Ghi nhớ',
+   brief:'Ôn lại đúng lúc bạn sắp quên. Dựa trên đường cong quên lãng của Ebbinghaus.',
+   detail:'Hermann Ebbinghaus (1885) phát hiện não quên thông tin theo hàm mũ. Spaced Repetition tận dụng điều này: ôn lại sau 1 ngày, 3 ngày, 7 ngày, 14 ngày... Phần mềm như Anki tự động tính toán khoảng cách ôn tập tối ưu. Tiết kiệm 50-80% thời gian so với học thuộc lòng thông thường.',
+   best:'Phù hợp: Từ vựng ngoại ngữ, thuật ngữ chuyên ngành, công thức'},
+  {id:'activere',icon:'✏️',name:'Active Recall',tag:'active',tagLabel:'Chủ động',
+   brief:'Tự hỏi và tự trả lời thay vì đọc lại. Kiểm tra chính mình liên tục.',
+   detail:'Nghiên cứu của Roediger & Karpicke (2006) chứng minh active recall hiệu quả hơn đọc lại 50%. Cách thực hiện: Đọc xong, đóng sách lại và viết ra mọi thứ bạn nhớ. Dùng flashcard. Làm đề thi thử. Dạy cho người khác. Não học tốt nhất khi bị "ép" nhớ lại.',
+   best:'Phù hợp: Chuẩn bị thi cử, học lý thuyết nhiều'},
+  {id:'mindmap',icon:'🗺️',name:'Mind Mapping',tag:'memory',tagLabel:'Ghi nhớ',
+   brief:'Vẽ sơ đồ tư duy kết nối các ý tưởng. Phù hợp cho tư duy hình ảnh.',
+   detail:'Tony Buzan popularized mind mapping vào năm 1970. Bộ não xử lý hình ảnh và màu sắc nhanh hơn văn bản tuyến tính 60,000 lần. Đặt chủ đề trung tâm, phân nhánh ra các khái niệm liên quan. Dùng màu sắc, hình ảnh để kích hoạt cả não trái lẫn não phải. Phần mềm: XMind, MindMeister.',
+   best:'Phù hợp: Người tư duy hình ảnh, tổng hợp kiến thức'},
+  {id:'cornell',icon:'📝',name:'Phương pháp Cornell',tag:'active',tagLabel:'Chủ động',
+   brief:'Chia trang giấy thành 3 vùng: ghi chú, từ khóa, tóm tắt.',
+   detail:'Được phát triển tại Đại học Cornell bởi Walter Pauk. Chia trang thành: Cột phải (70%) – ghi chú chính khi nghe giảng. Cột trái (30%) – câu hỏi/từ khóa sau bài. Phần dưới – tóm tắt 2-3 câu. Phương pháp buộc bạn xử lý thông tin 3 lần: ghi, hỏi, tóm tắt.',
+   best:'Phù hợp: Sinh viên đại học, nghe giảng trực tiếp'},
+  {id:'deepwork',icon:'🔒',name:'Deep Work',tag:'focus',tagLabel:'Tập trung',
+   brief:'Tập trung không gián đoạn vào công việc đòi hỏi nhận thức cao trong thời gian dài.',
+   detail:'Cal Newport định nghĩa Deep Work là trạng thái tập trung không bị gián đoạn. Tắt điện thoại, mạng xã hội. Lên lịch "deep work blocks" hàng ngày. Bắt đầu với 1 giờ, tăng dần lên 4 giờ. Nghiên cứu chỉ ra 4 giờ deep work mỗi ngày đã đủ để đạt thành tích xuất sắc trong hầu hết lĩnh vực.',
+   best:'Phù hợt: Học nâng cao, nghiên cứu, viết lách'},
+  {id:'elaborative',icon:'🔗',name:'Elaborative Interrogation',tag:'active',tagLabel:'Chủ động',
+   brief:'Liên tục đặt câu hỏi "Tại sao?" và "Như thế nào?" khi học.',
+   detail:'Kỹ thuật này kích hoạt tư duy phân tích sâu (deep processing). Thay vì chấp nhận thông tin, hãy hỏi: Tại sao điều này đúng? Cái gì gây ra hiện tượng này? Kết nối với gì tôi đã biết? Nghiên cứu của Woloshyn et al. cho thấy kỹ thuật này cải thiện khả năng ghi nhớ 35-40% so với đọc thụ động.',
+   best:'Phù hợp: Học khoa học, toán, triết học'},
+  {id:'interleaving',icon:'🔀',name:'Interleaved Practice',tag:'active',tagLabel:'Chủ động',
+   brief:'Xen kẽ nhiều chủ đề/kỹ năng thay vì học từng cái một liên tục.',
+   detail:'Trái với blocked practice (học 100 bài toán cùng loại), interleaving xen kẽ các dạng bài khác nhau. Não phải liên tục nhận dạng "loại bài này cần chiến lược nào?". Nghiên cứu của Rohrer & Taylor (2007): điểm kiểm tra cao hơn 43% với interleaving dù cảm giác khó hơn khi học. Áp dụng: xen kẽ chủ đề khi ôn thi.',
+   best:'Phù hợp: Chuẩn bị thi, thực hành kỹ năng'},
+  {id:'chunking',icon:'🧩',name:'Chunking',tag:'memory',tagLabel:'Ghi nhớ',
+   brief:'Gom nhóm thông tin thành các "chunks" có nghĩa để dễ nhớ hơn.',
+   detail:'Nhà tâm lý học George Miller (1956) phát hiện bộ nhớ ngắn hạn chứa được 7±2 đơn vị. Chunking gom nhiều đơn vị nhỏ thành 1 đơn vị lớn có nghĩa. Ví dụ: "VN-AV-EW" → "VN" "AV" "EW". Số điện thoại chia thành nhóm 3-4 số. Kỹ thuật này tăng dung lượng nhớ ngắn hạn hiệu quả và là nền tảng của mọi expertise.',
+   best:'Phù hợp: Học ngoại ngữ, ghi nhớ dữ liệu'},
+  {id:'teaching',icon:'👩‍🏫',name:'Học bằng cách dạy',tag:'social',tagLabel:'Xã hội',
+   brief:'Dạy lại cho người khác là cách học hiệu quả nhất theo Tháp học tập.',
+   detail:'Edgar Dale\'s Learning Pyramid (1969) chỉ ra: đọc 10% nhớ, nghe 20%, thảo luận 50%, thực hành 75%, dạy người khác 90%. Khi bạn dạy, não phải tổ chức thông tin, dự đoán câu hỏi, xử lý phản hồi. Có thể dạy bạn bè, giải thích cho người thân, viết blog, hoặc làm video.',
+   best:'Phù hợp: Người thích xã hội, người cần hiểu sâu'},
+  {id:'retrieval',icon:'🎯',name:'Retrieval Practice',tag:'active',tagLabel:'Chủ động',
+   brief:'Luyện tập nhớ lại thông tin từ trí nhớ dài hạn thường xuyên.',
+   detail:'Testing Effect – được chứng minh trong hàng trăm nghiên cứu: làm bài kiểm tra giúp học tốt hơn đọc thêm nhiều lần. Cơ chế: mỗi lần nhớ lại, ký ức được củng cố và dễ nhớ hơn lần sau. Thực hiện: sau khi học, đóng sách 10 phút và viết lại mọi thứ nhớ được. Làm vậy mỗi ngày trong 1 tuần.',
+   best:'Phù hợp: Tất cả môn học, mọi lứa tuổi'},
+];
+
+const selectedMethods=new Set();
+
+function renderMethods(){
+  const grid=document.getElementById('methodsGrid');
+  grid.innerHTML=methods.map(m=>`
+    <div class="method-card" id="card-${m.id}" onclick="toggleMethod('${m.id}')">
+      <span class="method-tag tag-${m.tag}">${m.tagLabel}</span>
+      <div class="method-icon">${m.icon}</div>
+      <div class="method-name">${m.name}</div>
+      <div class="method-brief">${m.brief}</div>
+      <div class="method-detail">${m.detail}<div class="method-best">${m.best}</div></div>
+    </div>
+  `).join('');
+}
+
+function toggleMethod(id){
+  const card=document.getElementById('card-'+id);
+  const wasExpanded=card.classList.contains('expanded');
+  // collapse all
+  document.querySelectorAll('.method-card').forEach(c=>c.classList.remove('expanded'));
+  if(!wasExpanded) card.classList.add('expanded');
+
+  if(selectedMethods.has(id)){
+    selectedMethods.delete(id);
+    card.classList.remove('selected');
+  } else {
+    selectedMethods.add(id);
+    card.classList.add('selected');
+  }
+  updateSummary();
+}
+
+function updateSummary(){
+  const summary=document.getElementById('selectedSummary');
+  const chips=document.getElementById('selectedChips');
+  if(selectedMethods.size===0){summary.classList.remove('show');return;}
+  summary.classList.add('show');
+  chips.innerHTML=[...selectedMethods].map(id=>{
+    const m=methods.find(x=>x.id===id);
+    return `<div class="chip">${m.icon} ${m.name}<button class="chip-del" onclick="removeMethod('${id}')">×</button></div>`;
+  }).join('');
+}
+
+function removeMethod(id){
+  selectedMethods.delete(id);
+  const card=document.getElementById('card-'+id);
+  if(card) card.classList.remove('selected','expanded');
+  updateSummary();
+}
+
+renderMethods();
+
+// ===== PERSONALITY MULTI-SELECT =====
+function togglePersonality(btn){
+  btn.classList.toggle('active');
+}
+function getPersonalities(){
+  return [...document.querySelectorAll('.p-chip.active')].map(b=>b.dataset.val);
+}
+
+// ===== SUGGESTION =====
+function getSuggestion(){
+  const age=document.getElementById('qAge').value;
+  const personalities=getPersonalities();
+  const level=document.getElementById('qLevel').value;
+  const time=document.getElementById('qTime').value;
+
+  const has=(...vals)=>vals.some(v=>personalities.includes(v));
+
+  let suggestions=[];
+
+  // Age-based base
+  if(age==='kid') suggestions.push('Bắt đầu bằng <b>Chunking</b> – chia nhỏ bài học thành từng phần ngắn dễ nhớ.');
+  if(age==='senior') suggestions.push('<b>Spaced Repetition</b> giúp ôn lại hiệu quả mà không tốn nhiều thời gian mỗi ngày.');
+
+  // Personality-based
+  if(has('visual')) suggestions.push('<b>Mind Mapping</b> là lựa chọn lý tưởng – vẽ sơ đồ màu sắc để não ghi nhớ sâu hơn.');
+  if(has('social')) suggestions.push('<b>Học bằng cách dạy</b> – lập nhóm và luân phiên giải thích cho nhau. Não nhớ tới 90% khi dạy người khác.');
+  if(has('solo')) suggestions.push('<b>Deep Work + Feynman Technique</b>: học sâu một mình và tự kiểm tra bằng cách viết lại khái niệm.');
+  if(has('active')) suggestions.push('<b>Interleaved Practice + Retrieval Practice</b>: xen kẽ các dạng bài và tự kiểm tra thường xuyên.');
+  if(has('auditory')) suggestions.push('<b>Feynman Technique</b>: đọc to và giải thích như đang dạy người khác – rất hiệu quả cho người học qua nghe.');
+  if(has('creative')) suggestions.push('<b>Mind Mapping</b> kết hợp <b>Elaborative Interrogation</b>: vừa sáng tạo sơ đồ vừa đặt câu hỏi "Tại sao?".');
+  if(has('structured')) suggestions.push('<b>Cornell Notes + Spaced Repetition</b>: ghi chú có cấu trúc rõ ràng và ôn theo lịch khoa học.');
+  if(has('curious')) suggestions.push('<b>Elaborative Interrogation</b>: tận dụng sự tò mò – liên tục hỏi "Tại sao?" và "Như thế nào?" khi học.');
+
+  // Time-based
+  if(time==='short') suggestions.push('Với dưới 30 phút/ngày, ưu tiên <b>Pomodoro 25/5</b> + <b>Active Recall</b> để tối ưu từng phút.');
+  if(time==='vlong') suggestions.push('Với hơn 2 giờ/ngày, thử <b>Deep Work 90 phút</b> rồi nghỉ 20 phút – tránh học liên tục gây kiệt sức não.');
+
+  // Level-based
+  if(level==='beginner') suggestions.push('Mới bắt đầu? Hãy dùng <b>Chunking</b> và <b>Pomodoro</b> để xây nền tảng vững chắc.');
+  if(level==='advanced') suggestions.push('Ở cấp nâng cao, <b>Interleaved Practice + Elaborative Interrogation</b> sẽ đẩy tư duy lên tầm cao mới.');
+
+  // Combo bonuses
+  if(has('visual','creative')) suggestions.push('✨ Combo đặc biệt: <b>Mind Mapping màu sắc + Cornell Notes</b> – vừa sáng tạo vừa có hệ thống.');
+  if(has('social','active')) suggestions.push('✨ Combo đặc biệt: <b>Học nhóm + Thực hành</b> – lập nhóm làm bài tập thực tế cùng nhau.');
+  if(has('solo','curious')) suggestions.push('✨ Combo đặc biệt: <b>Deep Work + Feynman + Elaborative Interrogation</b> – học một mình cực kỳ sâu.');
+
+  if(suggestions.length===0) suggestions.push('Hãy thử bắt đầu với <b>Pomodoro + Active Recall</b>: học 25 phút, sau đó đóng sách và ghi lại mọi thứ bạn nhớ.');
+
+  const result=document.getElementById('suggestionResult');
+  result.innerHTML='<b>💡 Gợi ý cho bạn:</b><br><br>'
+    +suggestions.map((s,i)=>`<div style="margin-bottom:8px;padding-left:4px">• ${s}</div>`).join('');
+  result.classList.add('show');
+}
+
+// ===== POMODORO =====
+let pomoWork=25,pomoBreak=5,pomoLeft=25*60,pomoRunning=false,pomoIsBreak=false,pomoTimer=null;
+
+function setPomoDisplay(){
+  const m=Math.floor(pomoLeft/60).toString().padStart(2,'0');
+  const s=(pomoLeft%60).toString().padStart(2,'0');
+  document.getElementById('pomoDisplay').textContent=`${m}:${s}`;
+  const total=(pomoIsBreak?pomoBreak:pomoWork)*60;
+  document.getElementById('pomoBar').style.width=((pomoLeft/total)*100)+'%';
+  document.getElementById('pomoLabel').textContent=pomoIsBreak?'BREAK 🌿':'FOCUS 🔥';
+}
+
+function setPomoMode(work,brk,btn){
+  document.querySelectorAll('.pomo-mode').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  pomoWork=work;pomoBreak=brk;
+  pomoLeft=work*60;pomoIsBreak=false;pomoRunning=false;
+  clearInterval(pomoTimer);
+  document.getElementById('pomoPauseBtn').textContent='▶ Start';
+  setPomoDisplay();
+}
+
+function pomoPause(){
+  if(pomoRunning){
+    pomoRunning=false;clearInterval(pomoTimer);
+    document.getElementById('pomoPauseBtn').textContent='▶ Resume';
+  } else {
+    pomoRunning=true;
+    document.getElementById('pomoPauseBtn').textContent='⏸ Pause';
+    pomoTimer=setInterval(()=>{
+      pomoLeft--;
+      if(pomoLeft<=0){
+        pomoIsBreak=!pomoIsBreak;
+        pomoLeft=(pomoIsBreak?pomoBreak:pomoWork)*60;
+        try{new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAA...').play();}catch(e){}
+      }
+      setPomoDisplay();
+    },1000);
+  }
+}
+function pomoReset(){
+  clearInterval(pomoTimer);pomoRunning=false;pomoIsBreak=false;
+  pomoLeft=pomoWork*60;
+  document.getElementById('pomoPauseBtn').textContent='▶ Start';
+  setPomoDisplay();
+}
+function pomoSkip(){
+  clearInterval(pomoTimer);pomoRunning=false;
+  pomoIsBreak=!pomoIsBreak;
+  pomoLeft=(pomoIsBreak?pomoBreak:pomoWork)*60;
+  document.getElementById('pomoPauseBtn').textContent='▶ Start';
+  setPomoDisplay();
+}
+setPomoDisplay();
+
+// ===== TODO =====
+let todos=[];
+function addTodo(){
+  const inp=document.getElementById('todoInput');
+  const text=inp.value.trim();
+  if(!text) return;
+  todos.push({id:Date.now(),text,done:false});
+  inp.value='';renderTodos();
+}
+function renderTodos(){
+  const list=document.getElementById('todoList');
+  if(todos.length===0){list.innerHTML='<div class="todo-empty">Chưa có nhiệm vụ nào 📝</div>';return;}
+  list.innerHTML=todos.map(t=>`
+    <div class="todo-item ${t.done?'done':''}" id="todo-${t.id}">
+      <div class="todo-check" onclick="toggleTodo(${t.id})">${t.done?'✓':''}</div>
+      <span class="todo-text">${t.text}</span>
+      <button class="todo-del" onclick="deleteTodo(${t.id})">×</button>
+    </div>
+  `).join('');
+}
+function toggleTodo(id){const t=todos.find(x=>x.id===id);if(t)t.done=!t.done;renderTodos();}
+function deleteTodo(id){todos=todos.filter(x=>x.id!==id);renderTodos();}
+</script>
 </body>
 </html>
