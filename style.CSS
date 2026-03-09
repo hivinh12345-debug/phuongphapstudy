@@ -1,7 +1,3 @@
-/* =============================================
-   BƯỚC 1: KHAI BÁO MÀU SẮC DÙNG CHUNG
-   Thay đổi ở đây sẽ ảnh hưởng toàn bộ trang
-============================================= */
 :root {
   --mau-nen: #f0f4ff;
   --mau-nen-the: #ffffff;
@@ -16,7 +12,6 @@
   --bong: 0 2px 12px rgba(0, 0, 0, 0.08);
 }
 
-/* Chế độ tối — khi thẻ body có class "toi" */
 body.toi {
   --mau-nen: #0f0f1a;
   --mau-nen-the: #1a1a2e;
@@ -26,26 +21,17 @@ body.toi {
   --mau-vien: #2a2a40;
   --bong: 0 2px 12px rgba(0, 0, 0, 0.3);
 }
-
-/* =============================================
-   BƯỚC 2: RESET — Xóa style mặc định trình duyệt
-============================================= */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-
 body {
   font-family: 'Nunito', sans-serif;
   background-color: var(--mau-nen);
   color: var(--mau-chu);
   transition: background-color 0.3s, color 0.3s;
 }
-
-/* =============================================
-   HEADER — Thanh trên cùng
-============================================= */
 .header {
   position: sticky;
   top: 0;
@@ -87,10 +73,6 @@ body {
 .btn-theme:hover {
   opacity: 0.8;
 }
-
-/* =============================================
-   HERO — Phần giới thiệu lớn
-============================================= */
 .hero {
   text-align: center;
   padding: 60px 24px 40px;
@@ -111,10 +93,6 @@ body {
   margin-inline: auto;
   line-height: 1.6;
 }
-
-/* =============================================
-   QUOTE — Ô trích dẫn ngẫu nhiên
-============================================= */
 .quote-box {
   margin: 0 24px 32px;
   padding: 20px 24px;
@@ -137,10 +115,6 @@ body {
   font-weight: 700;
   color: var(--mau-chinh);
 }
-
-/* =============================================
-   LAYOUT CHÍNH
-============================================= */
 .main {
   max-width: 1100px;
   margin: 0 auto;
@@ -154,9 +128,6 @@ body {
   border-left: 4px solid var(--mau-chinh);
   padding-left: 12px;
 }
-
-/* Thẻ chung — dùng cho nhiều vùng */
-.the {
   background-color: var(--mau-nen-the);
   border: 1.5px solid var(--mau-vien);
   border-radius: 16px;
@@ -164,10 +135,6 @@ body {
   box-shadow: var(--bong);
   transition: background-color 0.3s;
 }
-
-/* =============================================
-   QUIZ — Gợi ý cá nhân
-============================================= */
 .quiz-luoi {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -266,10 +233,6 @@ body {
 .ket-qua-goi-y.hien {
   display: block;
 }
-
-/* =============================================
-   LƯỚI PHƯƠNG PHÁP HỌC
-============================================= */
 .luoi-phuong-phap {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -379,17 +342,11 @@ body {
   cursor: pointer;
   font-size: 16px;
 }
-
-/* =============================================
-   CÔNG CỤ — Pomodoro & To-do
-============================================= */
 .luoi-cong-cu {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
 }
-
-/* Responsive: màn hình nhỏ hơn 640px thì 1 cột */
 @media (max-width: 640px) {
   .luoi-cong-cu { grid-template-columns: 1fr; }
   .hero h1 { font-size: 36px; }
@@ -400,15 +357,12 @@ body {
   font-weight: 800;
   margin-bottom: 20px;
 }
-
-/* --- POMODORO --- */
 .chon-che-do {
   display: flex;
   gap: 8px;
   justify-content: center;
   margin-bottom: 16px;
 }
-
 .btn-che-do {
   padding: 6px 14px;
   border: 1.5px solid var(--mau-vien);
@@ -594,10 +548,6 @@ body {
   color: var(--mau-chu-mo);
   font-size: 14px;
 }
-
-/* =============================================
-   FOOTER
-============================================= */
 footer {
   text-align: center;
   padding: 24px;
