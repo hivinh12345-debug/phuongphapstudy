@@ -1,1 +1,501 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>L.I.P.S — Lock In Peak Study</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.CSS" />
+</head>
+
+<body>
+  <header class="header">
+    <div>
+      <div class="logo">L.I.P.S 📚</div>
+      <div class="logo-sub">Lock In Peak Study</div>
+    </div>
+    <button class="btn-theme" onclick="toggleTheme()" id="nutTheme">🌙 Chế độ tối</button>
+  </header>
+  <div class="hero">
+    <h1>Lock In Peak Study ✨</h1>
+    <p>Tìm phương pháp học phù hợp với bạn. Học đúng cách — hiểu sâu hơn, nhớ lâu hơn.</p>
+  </div>
+  <div class="quote-box">
+    <p id="quoteText">Đang tải...</p>
+    <span id="quoteAuthor"></span>
+  </div>
+  <main class="main">
+    <div class="tieu-de-section">🎯 Gợi ý phương pháp cho bạn</div>
+    <div class="the">
+      <div class="quiz-luoi">
+        <div>
+          <label>Độ tuổi</label>
+          <select class="o-chon" id="chonTuoi">
+            <option value="">— Chọn —</option>
+            <option value="cap2">Dưới 15 tuổi</option>
+            <option value="cap3">15 – 18 tuổi</option>
+            <option value="dh">18 – 25 tuổi</option>
+            <option value="nguoilon">Trên 25 tuổi</option>
+          </select>
+        </div>
+        <div class="nhom-tinh-cach">
+          <label>Tính cách <small style="color:var(--mau-xanh-la);font-weight:600">(chọn được nhiều)</small></label>
+          <div class="tinh-cach-luoi">
+            <button class="nut-tinh-cach" data-val="hinh-anh"    onclick="chonTinhCach(this)">🖼️ Thích hình ảnh</button>
+            <button class="nut-tinh-cach" data-val="nhom"        onclick="chonTinhCach(this)">👥 Thích học nhóm</button>
+            <button class="nut-tinh-cach" data-val="mot-minh"    onclick="chonTinhCach(this)">🧘 Học một mình</button>
+            <button class="nut-tinh-cach" data-val="thuc-hanh"   onclick="chonTinhCach(this)">🛠️ Thích thực hành</button>
+            <button class="nut-tinh-cach" data-val="nghe"        onclick="chonTinhCach(this)">🎧 Thích nghe / đọc to</button>
+            <button class="nut-tinh-cach" data-val="sang-tao"    onclick="chonTinhCach(this)">🎨 Sáng tạo</button>
+            <button class="nut-tinh-cach" data-val="co-cau-truc" onclick="chonTinhCach(this)">📋 Thích có kế hoạch</button>
+            <button class="nut-tinh-cach" data-val="to-mo"       onclick="chonTinhCach(this)">🔍 Hay đặt câu hỏi</button>
+          </div>
+        </div>
+        <div>
+          <label>Năng lực hiện tại</label>
+          <select class="o-chon" id="chonNangLuc">
+            <option value="">— Chọn —</option>
+            <option value="moi">Mới bắt đầu</option>
+            <option value="trungbinh">Trung bình</option>
+            <option value="kha">Khá / Giỏi</option>
+          </select>
+        </div>
+        <div>
+          <label>Thời gian học mỗi ngày</label>
+          <select class="o-chon" id="chonThoiGian">
+            <option value="">— Chọn —</option>
+            <option value="it">Dưới 30 phút</option>
+            <option value="vua">30 – 60 phút</option>
+            <option value="nhieu">1 – 2 giờ</option>
+            <option value="rat-nhieu">Trên 2 giờ</option>
+          </select>
+        </div>
+
+      </div>
+
+      <button class="btn-goi-y" onclick="layGoiY()">✨ Gợi ý cho tôi</button>
+      <div class="ket-qua-goi-y" id="ketQuaGoiY"></div>
+    </div>
+    <div class="da-chon-box the" id="boxDaChon">
+      <strong>✅ Phương pháp bạn đã chọn:</strong>
+      <div class="danh-sach-chon" id="danhSachChon"></div>
+    </div>
+    <div class="tieu-de-section">📚 Thư viện phương pháp học</div>
+    <p style="color:var(--mau-chu-mo); margin-bottom:16px; font-size:14px">
+      Click vào thẻ để xem chi tiết. Click lần nữa để chọn / bỏ chọn.
+    </p>
+    <div class="luoi-phuong-phap" id="luoiPhuongPhap"></div>
+    <div class="tieu-de-section">🛠️ Công cụ hỗ trợ học tập</div>
+    <div class="luoi-cong-cu">
+      <div class="the">
+        <div class="tieu-de-the">🍅 Pomodoro Timer</div>
+        <div class="chon-che-do">
+          <button class="btn-che-do hoat-dong" onclick="doiCheDoPomodoro(25, 5, this)">25 / 5</button>
+          <button class="btn-che-do"           onclick="doiCheDoPomodoro(50, 10, this)">50 / 10</button>
+          <button class="btn-che-do"           onclick="doiCheDoPomodoro(90, 20, this)">90 / 20</button>
+        </div>
+
+        <div class="trang-thai-pomo" id="trangThaiPomo">Tập trung 🔥</div>
+        <div class="dong-ho" id="dongHo">25:00</div>
+
+        <div class="thanh-tien-trinh">
+          <div class="thanh-bar" id="thanhBar"></div>
+        </div>
+
+        <div class="nhom-nut-pomo">
+          <button class="btn-pomo" onclick="batDung()" id="nutBatDung">▶ Bắt đầu</button>
+          <button class="btn-pomo" onclick="datLai()">↺ Đặt lại</button>
+          <button class="btn-pomo" onclick="boQua()">⏭ Bỏ qua</button>
+        </div>
+      </div>
+      <div class="the">
+        <div class="tieu-de-the">✅ Danh sách việc cần làm</div>
+
+        <div class="nhap-todo">
+          <input
+            type="text"
+            class="o-nhap"
+            id="oNhapTodo"
+            placeholder="Thêm việc cần làm..."
+            onkeydown="if(event.key === 'Enter') themViec()"
+          />
+          <button class="btn-them" onclick="themViec()">+</button>
+        </div>
+        <div class="danh-sach-todo" id="danhSachTodo">
+          <div class="trong-rong">Chưa có việc gì cả 📝</div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+  <footer>L.I.P.S — Lock In Peak Study &nbsp;·&nbsp; Học đúng cách, sống trọn vẹn 🌱</footer>
+  <script>
+
+    let dangToiHay = false;
+
+    function toggleTheme() {
+      dangToiHay = !dangToiHay;
+
+      if (dangToiHay) {
+        document.body.classList.add('toi');
+        document.getElementById('nutTheme').textContent = '☀️ Chế độ sáng';
+      } else {
+        document.body.classList.remove('toi'); 
+        document.getElementById('nutTheme').textContent = '🌙 Chế độ tối';
+      }
+    }
+    const danhSachQuote = [
+      { loi: "Học không phải là nhồi nhét mà là thắp sáng ngọn lửa.",       nguoi: "William Butler Yeats" },
+      { loi: "Đầu tư vào kiến thức luôn cho lãi suất cao nhất.",             nguoi: "Benjamin Franklin" },
+      { loi: "Nếu bạn không thể giải thích đơn giản, bạn chưa hiểu đủ sâu.", nguoi: "Albert Einstein" },
+      { loi: "Mỗi chuyên gia từng là người mới bắt đầu.",                    nguoi: "Helen Hayes" },
+      { loi: "Kỷ luật là cầu nối giữa mục tiêu và thành tựu.",               nguoi: "Jim Rohn" },
+      { loi: "Hãy học như bạn sẽ sống mãi mãi.",                             nguoi: "Mahatma Gandhi" },
+      { loi: "Kiên trì là bí mật của mọi chiến thắng.",                      nguoi: "Victor Hugo" },
+      { loi: "Thành công là tổng của những nỗ lực nhỏ được lặp đi lặp lại.", nguoi: "Robert Collier" },
+    ];
+
+    function hienQuoteNgauNhien() {
+      const viTri = Math.floor(Math.random() * danhSachQuote.length);
+      const quote = danhSachQuote[viTri];
+
+      document.getElementById('quoteText').textContent = quote.loi;
+      document.getElementById('quoteAuthor').textContent = '— ' + quote.nguoi;
+    }
+
+    hienQuoteNgauNhien();
+
+    const danhSachPhuongPhap = [
+      {
+        id: 'pomodoro',
+        icon: '🍅',
+        ten: 'Kỹ thuật Pomodoro',
+        loai: 'tap-trung',
+        nhan: 'Tập trung',
+        tomTat: 'Học 25 phút, nghỉ 5 phút. Lặp lại nhiều vòng.',
+        chiTiet: 'Não người chỉ tập trung sâu tối đa 25–50 phút. Pomodoro chia nhỏ thời gian để tránh kiệt sức. Sau 4 vòng, nghỉ dài 15–30 phút. Rất hiệu quả với môn Toán, Lý, Hóa.',
+        phuHop: 'Phù hợp: Người hay phân tâm, hay trì hoãn học bài.'
+      },
+      {
+        id: 'feynman',
+        icon: '🧠',
+        ten: 'Kỹ thuật Feynman',
+        loai: 'ghi-nho',
+        nhan: 'Ghi nhớ',
+        tomTat: 'Học bằng cách giải thích lại như dạy cho người khác.',
+        chiTiet: 'Bước 1: Chọn khái niệm cần học. Bước 2: Giải thích như dạy cho người chưa biết gì. Bước 3: Tìm chỗ còn mơ hồ. Bước 4: Quay lại học cho rõ. Lặp đến khi giải thích trôi chảy.',
+        phuHop: 'Phù hợp: Học các khái niệm khó, chuẩn bị thi miệng.'
+      },
+      {
+        id: 'spaced',
+        icon: '📅',
+        ten: 'Ôn cách quãng (Spaced Repetition)',
+        loai: 'ghi-nho',
+        nhan: 'Ghi nhớ',
+        tomTat: 'Ôn lại đúng lúc sắp quên. Não nhớ lâu hơn nhiều.',
+        chiTiet: 'Não quên thông tin theo quy luật. Spaced Repetition ôn đúng thời điểm: sau 1 ngày → 3 ngày → 7 ngày → 14 ngày. Dùng app Anki miễn phí để tự động nhắc. Tiết kiệm 50–80% thời gian so với học vẹt.',
+        phuHop: 'Phù hợp: Học từ vựng tiếng Anh, công thức, định nghĩa.'
+      },
+      {
+        id: 'active-recall',
+        icon: '✏️',
+        ten: 'Active Recall (Tự kiểm tra)',
+        loai: 'chu-dong',
+        nhan: 'Chủ động',
+        tomTat: 'Đóng sách lại và cố nhớ — không đọc đi đọc lại.',
+        chiTiet: 'Sau khi học xong, đóng sách và viết ra tất cả những gì nhớ được. Sau đó mở sách kiểm tra lại. Nghiên cứu chứng minh cách này hiệu quả hơn đọc lại 50%. Dùng flashcard hoặc làm đề thi thử.',
+        phuHop: 'Phù hợp: Ôn thi, học lý thuyết nhiều, môn Sử, Địa.'
+      },
+      {
+        id: 'mind-map',
+        icon: '🗺️',
+        ten: 'Mind Mapping (Sơ đồ tư duy)',
+        loai: 'ghi-nho',
+        nhan: 'Ghi nhớ',
+        tomTat: 'Vẽ sơ đồ kết nối các ý tưởng. Dùng màu sắc và hình ảnh.',
+        chiTiet: 'Đặt chủ đề chính ở giữa, kéo nhánh ra các ý phụ. Dùng màu sắc khác nhau cho từng nhánh. Não xử lý hình ảnh nhanh hơn chữ 60.000 lần. Phần mềm miễn phí: Canva, MindMeister, XMind.',
+        phuHop: 'Phù hợp: Người thích hình ảnh, tổng hợp kiến thức nhiều chương.'
+      },
+      {
+        id: 'cornell',
+        icon: '📝',
+        ten: 'Phương pháp Cornell',
+        loai: 'chu-dong',
+        nhan: 'Chủ động',
+        tomTat: 'Chia trang giấy thành 3 vùng: ghi chú, từ khóa, tóm tắt.',
+        chiTiet: 'Cột phải (70%): ghi chú chính khi nghe giảng. Cột trái (30%): câu hỏi / từ khóa sau bài học. Phần dưới: tóm tắt 2–3 câu. Buộc bạn xử lý thông tin 3 lần: ghi → hỏi → tóm tắt.',
+        phuHop: 'Phù hợp: Nghe giảng trên lớp, học môn Sử, Địa, Văn.'
+      },
+      {
+        id: 'day-lai',
+        icon: '👩‍🏫',
+        ten: 'Học bằng cách dạy lại',
+        loai: 'xa-hoi',
+        nhan: 'Xã hội',
+        tomTat: 'Dạy lại cho bạn bè, người thân. Nhớ tới 90% khi dạy.',
+        chiTiet: 'Theo Tháp học tập: đọc nhớ 10%, nghe nhớ 20%, thảo luận nhớ 50%, dạy người khác nhớ 90%. Có thể giải thích cho bạn cùng lớp, làm video ngắn, viết bài giải thích.',
+        phuHop: 'Phù hợp: Người thích giao tiếp, thích học nhóm.'
+      },
+      {
+        id: 'deep-work',
+        icon: '🔒',
+        ten: 'Deep Work (Học sâu)',
+        loai: 'tap-trung',
+        nhan: 'Tập trung',
+        tomTat: 'Tắt điện thoại, tập trung tuyệt đối vào 1 việc trong thời gian dài.',
+        chiTiet: 'Tắt tất cả thông báo và mạng xã hội. Bắt đầu với 1 giờ, tăng dần. 4 giờ Deep Work mỗi ngày đủ để đạt thành tích xuất sắc. Hiệu quả nhất vào buổi sáng khi não còn tươi tỉnh.',
+        phuHop: 'Phù hợp: Học nâng cao, ôn thi đại học, viết luận.'
+      },
+    ];
+
+
+    /* ============================================
+       4. HIỂN THỊ THẺ PHƯƠNG PHÁP
+    ============================================ */
+
+    // Trả về tên class CSS tương ứng với loại phương pháp
+    function layClassNhan(loai) {
+      if (loai === 'ghi-nho')   return 'nhan-ghi-nho';
+      if (loai === 'tap-trung') return 'nhan-tap-trung';
+      if (loai === 'chu-dong')  return 'nhan-chu-dong';
+      if (loai === 'xa-hoi')    return 'nhan-xa-hoi';
+      return '';
+    }
+    function hienPhuongPhap() {
+      const luoi = document.getElementById('luoiPhuongPhap');
+      luoi.innerHTML = danhSachPhuongPhap.map(function(pp) {
+        return `
+          <div class="the-pp" id="the-${pp.id}" onclick="bopChon('${pp.id}')">
+            <span class="nhan ${layClassNhan(pp.loai)}">${pp.nhan}</span>
+            <div class="icon">${pp.icon}</div>
+            <div class="ten">${pp.ten}</div>
+            <div class="tom-tat">${pp.tomTat}</div>
+            <div class="chi-tiet">
+              ${pp.chiTiet}
+              <br><br>
+              <span style="color:var(--mau-xanh-la); font-weight:700">✅ ${pp.phuHop}</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    hienPhuongPhap();
+    const daPhuongPhapChon = new Set();
+
+    function bopChon(id) {
+      const the = document.getElementById('the-' + id);
+      const dangMo = the.classList.contains('mo'); 
+      document.querySelectorAll('.the-pp').forEach(function(t) {
+        t.classList.remove('mo');
+      });
+      if (!dangMo) {
+        the.classList.add('mo');
+      }
+      if (daPhuongPhapChon.has(id)) {
+        daPhuongPhapChon.delete(id);
+        the.classList.remove('da-chon');
+      } else {
+        daPhuongPhapChon.add(id);
+        the.classList.add('da-chon');
+      }
+
+      capNhatDaChon();
+    }
+    function capNhatDaChon() {
+      const box  = document.getElementById('boxDaChon');
+      const danh = document.getElementById('danhSachChon');
+
+      if (daPhuongPhapChon.size === 0) {
+        box.classList.remove('hien');
+        return;
+      }
+
+      box.classList.add('hien');
+      danh.innerHTML = [...daPhuongPhapChon].map(function(id) {
+        const pp = danhSachPhuongPhap.find(function(x) { return x.id === id; });
+        return `
+          <div class="chip">
+            ${pp.icon} ${pp.ten}
+            <button onclick="boChon('${id}')">×</button>
+          </div>
+        `;
+      }).join('');
+    }
+    function boChon(id) {
+      daPhuongPhapChon.delete(id);
+      const the = document.getElementById('the-' + id);
+      if (the) the.classList.remove('da-chon', 'mo');
+      capNhatDaChon();
+    }
+    function chonTinhCach(nut) {
+      nut.classList.toggle('chon');
+    }
+    function layTinhCach() {
+      const cacNutChon = document.querySelectorAll('.nut-tinh-cach.chon');
+      return [...cacNutChon].map(function(n) { return n.dataset.val; });
+    }
+    function layGoiY() {
+      const tuoi     = document.getElementById('chonTuoi').value;
+      const tinhCach = layTinhCach();
+      const nangLuc  = document.getElementById('chonNangLuc').value;
+      const thoiGian = document.getElementById('chonThoiGian').value;
+      function co() {
+        var vals = Array.from(arguments);
+        return vals.some(function(v) { return tinhCach.includes(v); });
+      }
+
+      var cacGoiY = []; 
+      if (tuoi === 'cap2' || tuoi === 'cap3') {
+        cacGoiY.push('📌 <b>Pomodoro 25/5</b> rất hợp cho học sinh — học ngắn, nghỉ đủ, không bị kiệt sức.');
+      }
+      if (tuoi === 'nguoilon') {
+        cacGoiY.push('📌 <b>Deep Work</b> phù hợp khi cần học sâu một chủ đề trong thời gian dài.');
+      }
+      if (co('hinh-anh', 'sang-tao')) {
+        cacGoiY.push('🖼️ Bạn thích hình ảnh / sáng tạo → dùng <b>Mind Mapping</b> để tổng hợp kiến thức bằng sơ đồ màu sắc.');
+      }
+      if (co('nhom')) {
+        cacGoiY.push('👥 Bạn thích học nhóm → thử <b>Học bằng cách dạy lại</b> cho bạn bè, não nhớ tới 90%.');
+      }
+      if (co('mot-minh')) {
+        cacGoiY.push('🧘 Bạn thích học một mình → <b>Deep Work + Feynman</b>: tập trung sâu rồi tự giải thích lại.');
+      }
+      if (co('thuc-hanh')) {
+        cacGoiY.push('🛠️ Bạn thích thực hành → <b>Active Recall</b>: đóng sách, tự nhớ lại và làm bài tập ngay.');
+      }
+      if (co('co-cau-truc')) {
+        cacGoiY.push('📋 Bạn thích có kế hoạch → <b>Cornell Notes + Ôn cách quãng</b>: ghi chú có hệ thống, ôn theo lịch.');
+      }
+      if (co('to-mo', 'nghe')) {
+        cacGoiY.push('🔍 Bạn hay đặt câu hỏi → luôn hỏi "Tại sao?" khi học, đây là cách hiểu sâu nhất.');
+      }
+      if (thoiGian === 'it') {
+        cacGoiY.push('⏱️ Dưới 30 phút/ngày → tập trung vào <b>Ôn cách quãng</b> (dùng Anki 15 phút mỗi sáng) là hiệu quả nhất.');
+      }
+      if (thoiGian === 'rat-nhieu') {
+        cacGoiY.push('⏱️ Hơn 2 giờ/ngày → dùng <b>Pomodoro 50/10</b> hoặc <b>90/20</b> để tránh kiệt sức não.');
+      }
+      if (nangLuc === 'moi') {
+        cacGoiY.push('🌱 Mới bắt đầu → chia nhỏ bài học, mỗi ngày chỉ học một phần nhỏ thôi, đừng cố học hết một lúc.');
+      }
+      if (nangLuc === 'kha') {
+        cacGoiY.push('🚀 Đã khá giỏi → xen kẽ nhiều dạng bài để não không "học theo quen tay", luyện cả phần mình đã giỏi lẫn phần yếu.');
+      }
+      if (cacGoiY.length === 0) {
+        cacGoiY.push('💡 Hãy thử <b>Pomodoro + Active Recall</b>: học 25 phút, sau đó đóng sách ghi lại những gì nhớ được. Đây là combo phổ biến nhất!');
+      }
+      const khung = document.getElementById('ketQuaGoiY');
+      khung.innerHTML = '<b>💡 Gợi ý dành riêng cho bạn:</b><br><br>'
+        + cacGoiY.map(function(g) {
+            return '<div style="margin-bottom:10px">• ' + g + '</div>';
+          }).join('');
+      khung.classList.add('hien'); 
+    }
+    let gioLam     = 25;     
+    let gioNghi    = 5;       
+    let giayConLai = 25 * 60; 
+    let dangChay   = false;  
+    let dangNghi   = false;   
+    let idInterval = null;   
+
+    function capNhatDongHo() {
+      const phut = Math.floor(giayConLai / 60);
+      const giay = giayConLai % 60;            
+      const chuoiHienThi = phut.toString().padStart(2, '0') + ':' + giay.toString().padStart(2, '0');
+      document.getElementById('dongHo').textContent = chuoiHienThi;
+      document.getElementById('trangThaiPomo').textContent = dangNghi ? 'Đang nghỉ 🌿' : 'Tập trung 🔥';
+      const tongGiay = (dangNghi ? gioNghi : gioLam) * 60;
+      const phanTram = (giayConLai / tongGiay) * 100;
+      document.getElementById('thanhBar').style.width = phanTram + '%';
+    }
+    function doiCheDoPomodoro(lam, nghi, nutBamVao) {
+      document.querySelectorAll('.btn-che-do').forEach(function(n) {
+        n.classList.remove('hoat-dong');
+      });
+      nutBamVao.classList.add('hoat-dong');
+      gioLam  = lam;
+      gioNghi = nghi;
+      datLai(); 
+    }
+    function batDung() {
+      if (dangChay) {
+        dangChay = false;
+        clearInterval(idInterval); 
+        document.getElementById('nutBatDung').textContent = '▶ Tiếp tục';
+      } else {
+        dangChay = true;
+        document.getElementById('nutBatDung').textContent = '⏸ Tạm dừng';
+        idInterval = setInterval(function() {
+          giayConLai--;
+          if (giayConLai <= 0) {
+            dangNghi   = !dangNghi;
+            giayConLai = (dangNghi ? gioNghi : gioLam) * 60;
+          }
+          capNhatDongHo();
+        }, 1000);
+      }
+    }
+    function datLai() {
+      clearInterval(idInterval);
+      dangChay   = false;
+      dangNghi   = false;
+      giayConLai = gioLam * 60;
+      document.getElementById('nutBatDung').textContent = '▶ Bắt đầu';
+      capNhatDongHo();
+    }
+    function boQua() {
+      clearInterval(idInterval);
+      dangChay   = false;
+      dangNghi   = !dangNghi;
+      giayConLai = (dangNghi ? gioNghi : gioLam) * 60;
+      document.getElementById('nutBatDung').textContent = '▶ Bắt đầu';
+      capNhatDongHo();
+    }
+
+    capNhatDongHo();
+    let danhSachViec = [];
+    function themViec() {
+      const oNhap   = document.getElementById('oNhapTodo');
+      const noiDung = oNhap.value.trim();
+      if (noiDung === '') return;
+      danhSachViec.push({
+        id:      Date.now(),
+        noiDung: noiDung,
+        xong:    false
+      });
+      oNhap.value = '';
+      veViec();
+    }
+    function veViec() {
+      const khung = document.getElementById('danhSachTodo');
+      if (danhSachViec.length === 0) {
+        khung.innerHTML = '<div class="trong-rong">Chưa có việc gì cả 📝</div>';
+        return;
+      }
+      khung.innerHTML = danhSachViec.map(function(viec) {
+        return `
+          <div class="item-todo ${viec.xong ? 'hoan-thanh' : ''}">
+            <div class="hop-tick" onclick="tickViec(${viec.id})">${viec.xong ? '✓' : ''}</div>
+            <span class="chu-todo">${viec.noiDung}</span>
+            <button class="btn-xoa" onclick="xoaViec(${viec.id})">×</button>
+          </div>
+        `;
+      }).join('');
+    }
+    function tickViec(id) {
+      const viec = danhSachViec.find(function(v) { return v.id === id; });
+      if (viec) {
+        viec.xong = !viec.xong; 
+        veViec();
+      }
+    }
+    function xoaViec(id) {
+      danhSachViec = danhSachViec.filter(function(v) { return v.id !== id; });
+      veViec();
+    }
+  </script>
+</body>
+</html>
 
